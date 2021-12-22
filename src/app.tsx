@@ -1,5 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { kRouteLabels, kRouteUrls } from "./services/data-fetch";
+import { Home } from "./pages/Home";
 
 const fetchUrls = async () => {
   const promises = kRouteUrls.map(url => window.fetch(url));
@@ -28,13 +29,6 @@ export function App() {
   }
 
   return (
-    <>
-      <h1>Bus Warbler</h1>
-      <div class="buttonMenu">
-        {Object.values(kRouteLabels).map(label => (
-          <button class="routeButton">{label}</button>
-        ))}
-      </div>
-    </>
+    <Home entries={Object.entries(kRouteLabels)} />
   );
 }
