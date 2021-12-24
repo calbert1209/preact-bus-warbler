@@ -1,6 +1,6 @@
 type HomeProps = {
-  entries: [string, string][]
-}
+  entries: [string, string][];
+};
 
 export const Home = (props: HomeProps) => {
   return (
@@ -9,11 +9,9 @@ export const Home = (props: HomeProps) => {
       <div class="buttonMenu">
         {props.entries.map(([key, value]) => {
           const [stopName] = key.split("_");
-          return (
-            <button class="routeButton">{value}</button>
-          );
+          return <button class="routeButton">{value}</button>;
         })}
       </div>
     </>
   );
-}
+};

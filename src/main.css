@@ -39,7 +39,7 @@ body {
   padding: 0;
   margin: 0;
   background: #fafafa;
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   /* font-family: "Helvetica Neue", arial, sans-serif; */
   font-weight: 400;
   color: #444;
@@ -81,7 +81,7 @@ h1 {
 
 .routeButton {
   font-size: 1.5em;
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   font-weight: 400;
   background-color: var(--grey800);
   color: var(--blue300);
