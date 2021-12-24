@@ -5,13 +5,13 @@ import preact from "@preact/preset-vite";
 export default defineConfig(({ command, mode }) => {
   const baseConfig = {
     plugins: [preact()],
-  }
+  };
   if (command === "serve") {
     return baseConfig;
   } else {
     return {
       ...baseConfig,
-      base: "/preact-bus-warbler/"
-    }
+      base: "/preact-bus-warbler/",
+    };
   }
 });
