@@ -42,3 +42,5 @@ export type Route = {
   header: RouteHeader;
   times: ScheduledStop[];
 };
+
+export type BusRouteDictionary = Record<string, Route>;

@@ -1,9 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import {
-  Router,
-  Route,
-  useLocation,
-} from "wouter-preact";
+import { Router, Route, useLocation } from "wouter-preact";
 import * as Bus from "./services/data-fetch";
 import { kRouteLabels, kRouteUrls } from "./services/data-fetch";
 import { Home } from "./pages/Home";
@@ -30,15 +26,13 @@ const fetchUrls = async () => {
 
 type BusRouteDictionary = Record<string, Bus.Route>;
 
-const Dummy = ({
-  stopName,
-  dest,
-  data,
-}: {
+type DummyProps = {
   stopName: string;
   dest: string;
   data: BusRouteDictionary | null;
-}) => {
+};
+
+const Dummy = ({ stopName, dest, data }: DummyProps) => {
   const [_, to] = useLocation();
   const key = `${stopName}_${dest}`;
   const routeData = data?.[key];
@@ -49,9 +43,7 @@ const Dummy = ({
       <button onClick={() => to("/")}>back</button>
       {routeData ? (
         <div>
-          {JSON.stringify(
-            { name: routeData.name, header: routeData.header },
-          )}
+          {JSON.stringify({ name: routeData.name, header: routeData.header })}
         </div>
       ) : (
         <div>no data found</div>
@@ -79,7 +71,7 @@ export function App() {
   return (
     <Router>
       <Route path="/">
-        <Home entries={Object.entries(kRouteLabels)} />
+        <Home data={data!} />
       </Route>
       <Route path="/:stopName/:dest">
         {({ stopName, dest }) => {
