@@ -8,11 +8,6 @@ import { AppStateProvider } from "./contexts/AppState";
 
 type BusRouteDictionary = Record<string, Bus.Route>;
 
-const resolvePath = (path: string) => {
-  const base = import.meta.env.PROD ? "preact-bus-warbler/" : "";
-  return `${base}${path}`;
-}
-
 export function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,11 +42,11 @@ export function App() {
 
   return (
     <AppStateProvider>
-      <Router>
-        <Route path={resolvePath("/")}>
+      <Router base="/preact-bus-warbler">
+        <Route path="/">
           <Home data={data!} />
         </Route>
-        <Route path={resolvePath("/:stopName/:dest")}>
+        <Route path="/:stopName/:dest">
           {({ stopName, dest }) => {
             return <StatusReport {...{ stopName, dest, data }} />;
           }}
