@@ -4,6 +4,7 @@ import * as Bus from "./services/entities";
 import { fetchUrls, kRouteUrls } from "./services/data-fetch";
 import { Home } from "./pages/Home";
 import { StatusReport } from "./pages/StatusReport";
+import { AppStateProvider } from "./contexts/AppState";
 
 type BusRouteDictionary = Record<string, Bus.Route>;
 
@@ -40,15 +41,17 @@ export function App() {
   }
 
   return (
-    <Router>
-      <Route path="/">
-        <Home data={data!} />
-      </Route>
-      <Route path="/:stopName/:dest">
-        {({ stopName, dest }) => {
-          return <StatusReport {...{ stopName, dest, data }} />;
-        }}
-      </Route>
-    </Router>
+    <AppStateProvider>
+      <Router>
+        <Route path="/">
+          <Home data={data!} />
+        </Route>
+        <Route path="/:stopName/:dest">
+          {({ stopName, dest }) => {
+            return <StatusReport {...{ stopName, dest, data }} />;
+          }}
+        </Route>
+      </Router>
+    </AppStateProvider>
   );
 }

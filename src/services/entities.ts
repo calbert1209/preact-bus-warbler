@@ -16,7 +16,8 @@ export type ScheduledStop = {
   index: number;
   hour: number;
   minute: number;
-  type: string;
+  type: ScheduleType;
+  note?: string;
 };
 
 export type Route = {
@@ -26,3 +27,9 @@ export type Route = {
 };
 
 export type BusRouteDictionary = Record<string, Route>;
+
+export enum ScheduleType {
+  weekday = "weekday",
+  saturday = "saturday",
+  holiday = "holiday",
+}
