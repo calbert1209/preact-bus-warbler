@@ -1,20 +1,11 @@
-const kBaseUrl = "https://calbert1209.github.io/json-api";
+import { BusRouteDictionary, Route, RouteKey } from "./entities";
 
-enum RouteKey {
-  kanai_ofuna = "kanai_ofuna",
-  ofuna_kanai = "ofuna_kanai",
-  kanai_totsuka = "kanai_totsuka",
-  totsuka_kanai = "totsuka_kanai",
-}
+const kBaseUrl = "https://calbert1209.github.io/json-api";
 
 // https://www.petermorlion.com/iterating-a-typescript-enum/
 function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
   return Object.keys(obj).filter((k) => Number.isNaN(+k)) as K[];
 }
-
-export const kRouteUrls = enumKeys(RouteKey).map(
-  (key) => `${kBaseUrl}/${key}.json`
-);
 
 export const kRouteLabels = {
   [RouteKey.kanai_ofuna]: "金井 → 大船",
@@ -23,24 +14,26 @@ export const kRouteLabels = {
   [RouteKey.totsuka_kanai]: "戸塚 → 金井",
 };
 
-export type RouteHeader = {
-  busStop: string;
-  dest: string;
-  fetchDate: string;
-  publishDate: string;
-};
+export const kRouteUrls = enumKeys(RouteKey).map(
+  (key) => `${kBaseUrl}/${key}.json`
+);
 
-export type ScheduledStop = {
-  index: number;
-  hour: number;
-  minute: number;
-  type: string;
-};
+export const fetchUrls = async (urls: string[]) => {
+  const promises = urls.map((url) => window.fetch(url));
+  const data = [];
+  for (const p of promises) {
+    try {
+      const resp = await p;
+      const json: Route = await resp.json();
+      data.push(json);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
-export type Route = {
-  name: string;
-  header: RouteHeader;
-  times: ScheduledStop[];
+  return data.reduce((lookup: BusRouteDictionary, item) => {
+    const key = item.name;
+    lookup[key] = item;
+    return lookup;
+  }, {});
 };
-
-export type BusRouteDictionary = Record<string, Route>;

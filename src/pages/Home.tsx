@@ -1,6 +1,6 @@
 import { useMemo } from "preact/hooks";
 import { useLocation } from "wouter-preact";
-import { BusRouteDictionary } from "../services/data-fetch";
+import { BusRouteDictionary } from "../services/entities";
 
 type HomeProps = {
   data: BusRouteDictionary;
