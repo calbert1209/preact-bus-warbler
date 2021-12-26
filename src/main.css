@@ -98,10 +98,49 @@ h1 {
   box-shadow: 1px 1px 4px #00000042;
 }
 
+.statusReportHeader {
+  position: relative;
+  left: 0;
+  top: 0;
+  right: 0;
+  background-color: var(--grey900);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.statusReportHeader .statusReportTitle {
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
+.backButton {
+  color: var(--blue300);
+  fill: var(--blue300);
+  font-size: 1.6em;
+  margin-left: 0.4em;
+  margin-right: 0.8em;
+}
+
+.backButton svg {
+  width: 0.8em;
+  height: 0.8em;
+  transform: translateY(0.1em);
+}
+
+.currentTimeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  color: white;
+  margin-top: 1em;
+}
+
 .nextTimesContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 1em;
 }
 
 .nextTimesBlock {
@@ -109,32 +148,31 @@ h1 {
   padding: 0.5em 4em;
   border-radius: 4px;
   border: 1px solid var(--black50);
-  margin-top: 1em;
 }
 
-.stopTimeDisplay {
-  font-weight: 400;
+.timeDisplay {
+  font-weight: 700;
   font-size: 2em;
   display: grid;
-  grid-template-columns: 7vw 0.3em 7vw;
+  grid-template-columns: 10vw 0.3em 10vw;
   align-items: center;
 }
 
-.stopTimeDisplay .pre-colon {
+.timeDisplay .pre-colon {
   display: flex;
   flex-direction: row;
   justify-content: end;
   align-items: center;
 }
 
-.stopTimeDisplay .post-colon {
+.timeDisplay .post-colon {
   display: flex;
   flex-direction: row;
   justify-content: start;
   align-items: baseline;
 }
 
-.stopTimeDisplay div.note {
+.timeDisplay div.note {
   margin-left: 0.1em;
   font-size: 0.4em;
   font-weight: 400;

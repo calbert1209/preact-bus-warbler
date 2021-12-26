@@ -1,5 +1,5 @@
 import { FunctionComponent as FC } from "preact";
-import { useMemo } from "preact/hooks";
+import { useCallback, useMemo } from "preact/hooks";
 import { useLocation } from "wouter-preact";
 import { useAppState } from "../contexts/AppState";
 import { dateToIndexNow, doubleDigits, routeKey } from "./status-report";
@@ -8,6 +8,9 @@ import {
   ScheduledStop,
   ScheduleType,
 } from "../services/entities";
+import { CurrentTime } from "../components/CurrentTime";
+import { BackArrowIcon } from "../components/BackArrowIcon";
+import { routeNameFromHeader } from "./Home";
 
 type StatusFilterProps = StatusReportProps & {
   scheduleType: ScheduleType;
@@ -38,18 +41,28 @@ const filterByStatus = ({
   return nextTimes;
 };
 
-const useNextTimes = ({ stopName, dest, data }: StatusReportProps) => {
+const useRouteNextTimes = ({ stopName, dest, data }: StatusReportProps) => {
   const { scheduleType } = useAppState();
 
-  return useMemo(
+  const nextTimes = useMemo(
     () => filterByStatus({ stopName, dest, scheduleType, data }),
     [stopName, dest, data, scheduleType]
   );
+
+  const routeName = useMemo(() => {
+    const key = routeKey(stopName, dest);
+    const routeData = data?.[key];
+    if (!routeData) return null;
+
+    return routeNameFromHeader(routeData.header);
+  }, [stopName, dest, data]);
+
+  return { nextTimes, routeName };
 };
 
 const StopTimeDisplay: FC<ScheduledStop> = ({ hour, minute, note }) => {
   return (
-    <div className="stopTimeDisplay">
+    <div className="timeDisplay">
       <div className="pre-colon">{doubleDigits(hour)}</div>
       <div className="colon">:</div>
       <div className="post-colon">
@@ -59,6 +72,18 @@ const StopTimeDisplay: FC<ScheduledStop> = ({ hour, minute, note }) => {
     </div>
   );
 };
+
+const StatusReportHeader: FC<{ routeName: string; onBack: () => void }> = ({
+  routeName,
+  onBack,
+}) => (
+  <div className="statusReportHeader">
+    <div className="backButton" onClick={onBack} role="button">
+      <BackArrowIcon />
+    </div>
+    <div className="statusReportTitle">{routeName}</div>
+  </div>
+);
 
 type StatusReportProps = {
   stopName: string;
@@ -71,17 +96,23 @@ export const StatusReport: FC<StatusReportProps> = ({
   dest,
   data,
 }) => {
-  const nextTimes = useNextTimes({ stopName, dest, data });
+  const { nextTimes, routeName } = useRouteNextTimes({ stopName, dest, data });
   const [_, to] = useLocation();
+
+  const onClickBack = useCallback(() => to("/"), []);
+
+  const safeRouteName = routeName ?? "ルート名不明";
 
   return (
     <>
-      <button onClick={() => to("/")}>back</button>
-        
+      <StatusReportHeader routeName={safeRouteName} onBack={onClickBack} />
+      <CurrentTime />
       {nextTimes?.length ? (
         <div className="nextTimesContainer">
           <div className="nextTimesBlock">
-          {nextTimes.map((time) => <StopTimeDisplay key={time.index} {...time} />)}
+            {nextTimes.map((time) => (
+              <StopTimeDisplay key={time.index} {...time} />
+            ))}
           </div>
         </div>
       ) : (

@@ -44,7 +44,7 @@ export const TypeMenuLayer: FC = ({ children }) => {
       <ul className="scheduleTypeMenu">
         {[...kScheduleTypeIcons.entries()].map(([type, label]) => (
           <TypeMenuItem
-            {... {type, label, key: type}}
+            {...{ type, label, key: type }}
             isSelected={type === scheduleType}
             onClick={setScheduleType}
           />

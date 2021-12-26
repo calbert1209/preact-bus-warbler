@@ -20,20 +20,23 @@ const dateToScheduleType = (date: Date = new Date()): ScheduleType => {
 
 const initialState = {
   scheduleType: ScheduleType.weekday,
-  setScheduleType: (t: ScheduleType) => {}
+  setScheduleType: (t: ScheduleType) => {},
 };
 
 const AppState = createContext<StateStore>(initialState);
 
 export const AppStateProvider: FunctionComponent = ({ children }) => {
   const [state, setState] = useState(() => ({
-    scheduleType: dateToScheduleType()
+    scheduleType: dateToScheduleType(),
   }));
 
-  const setScheduleType = (scheduleType: ScheduleType) => setState((s) => ({...s, scheduleType}));
+  const setScheduleType = (scheduleType: ScheduleType) =>
+    setState((s) => ({ ...s, scheduleType }));
 
   return (
-    <AppState.Provider value={{ ...state, setScheduleType }}>{children}</AppState.Provider>
+    <AppState.Provider value={{ ...state, setScheduleType }}>
+      {children}
+    </AppState.Provider>
   );
 };
 
