@@ -49,11 +49,13 @@ const useNextTimes = ({ stopName, dest, data }: StatusReportProps) => {
 
 const StopTimeDisplay: FC<ScheduledStop> = ({ hour, minute, note }) => {
   return (
-    <div>
-      <span>{doubleDigits(hour)}</span>
-      <span>:</span>
-      <span>{doubleDigits(minute)}</span>
-      {note && <span>{`( ${note} )`}</span>}
+    <div className="stopTimeDisplay">
+      <div className="pre-colon">{doubleDigits(hour)}</div>
+      <div className="colon">:</div>
+      <div className="post-colon">
+        <div className="minute">{doubleDigits(minute)}</div>
+        {note && <div className="note">{note}</div>}
+      </div>
     </div>
   );
 };
@@ -75,8 +77,13 @@ export const StatusReport: FC<StatusReportProps> = ({
   return (
     <>
       <button onClick={() => to("/")}>back</button>
+        
       {nextTimes?.length ? (
-        nextTimes.map((time) => <StopTimeDisplay key={time.index} {...time} />)
+        <div className="nextTimesContainer">
+          <div className="nextTimesBlock">
+          {nextTimes.map((time) => <StopTimeDisplay key={time.index} {...time} />)}
+          </div>
+        </div>
       ) : (
         <div>no data found</div>
       )}

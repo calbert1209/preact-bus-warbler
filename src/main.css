@@ -98,6 +98,49 @@ h1 {
   box-shadow: 1px 1px 4px #00000042;
 }
 
+.nextTimesContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.nextTimesBlock {
+  background-color: var(--grey900);
+  padding: 0.5em 4em;
+  border-radius: 4px;
+  border: 1px solid var(--black50);
+  margin-top: 1em;
+}
+
+.stopTimeDisplay {
+  font-weight: 400;
+  font-size: 2em;
+  display: grid;
+  grid-template-columns: 7vw 0.3em 7vw;
+  align-items: center;
+}
+
+.stopTimeDisplay .pre-colon {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
+
+.stopTimeDisplay .post-colon {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: baseline;
+}
+
+.stopTimeDisplay div.note {
+  margin-left: 0.1em;
+  font-size: 0.4em;
+  font-weight: 400;
+  margin-bottom: 0.25em;
+}
+
 .scheduleTypeMenu {
   position: absolute;
   bottom: 0;
