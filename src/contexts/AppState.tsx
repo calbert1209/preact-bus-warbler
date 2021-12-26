@@ -1,9 +1,10 @@
 import { createContext, FunctionComponent } from "preact";
-import { useContext } from "preact/hooks";
+import { useContext, useState } from "preact/hooks";
 import { ScheduleType } from "../services/entities";
 
 type StateStore = {
   scheduleType: ScheduleType;
+  setScheduleType: (t: ScheduleType) => void;
 };
 
 const dateToScheduleType = (date: Date = new Date()): ScheduleType => {
@@ -19,15 +20,20 @@ const dateToScheduleType = (date: Date = new Date()): ScheduleType => {
 
 const initialState = {
   scheduleType: ScheduleType.weekday,
+  setScheduleType: (t: ScheduleType) => {}
 };
 
 const AppState = createContext<StateStore>(initialState);
 
 export const AppStateProvider: FunctionComponent = ({ children }) => {
-  const scheduleType = dateToScheduleType();
+  const [state, setState] = useState(() => ({
+    scheduleType: dateToScheduleType()
+  }));
+
+  const setScheduleType = (scheduleType: ScheduleType) => setState((s) => ({...s, scheduleType}));
 
   return (
-    <AppState.Provider value={{ scheduleType }}>{children}</AppState.Provider>
+    <AppState.Provider value={{ ...state, setScheduleType }}>{children}</AppState.Provider>
   );
 };
 

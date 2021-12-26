@@ -1,12 +1,11 @@
 import { useEffect, useState } from "preact/hooks";
 import { Router, Route } from "wouter-preact";
-import * as Bus from "./services/entities";
 import { fetchUrls, kRouteUrls } from "./services/data-fetch";
 import { Home } from "./pages/Home";
 import { StatusReport } from "./pages/StatusReport";
 import { AppStateProvider } from "./contexts/AppState";
-
-type BusRouteDictionary = Record<string, Bus.Route>;
+import { BusRouteDictionary } from "./services/entities";
+import { TypeMenuLayer } from "./components/TypeMenuLayer";
 
 export function App() {
   const [loading, setLoading] = useState(true);
@@ -48,7 +47,11 @@ export function App() {
         </Route>
         <Route path="/:stopName/:dest">
           {({ stopName, dest }) => {
-            return <StatusReport {...{ stopName, dest, data }} />;
+            return (
+              <TypeMenuLayer>
+                <StatusReport {...{ stopName, dest, data }} />
+              </TypeMenuLayer>
+            );
           }}
         </Route>
       </Router>

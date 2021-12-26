@@ -97,3 +97,29 @@ h1 {
   background-color: var(--grey750);
   box-shadow: 1px 1px 4px #00000042;
 }
+
+.scheduleTypeMenu {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: var(--grey900);
+  margin: 0;
+  padding: 0;
+  cursor: default;
+}
+
+.scheduleTypeMenu li {
+  list-style-type: none;
+  color: var(--grey750);
+  font-size: 2em;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.scheduleTypeMenu li[data-checked="true"] {
+  color: var(--blue300);
+}
