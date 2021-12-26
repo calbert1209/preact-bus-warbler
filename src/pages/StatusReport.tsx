@@ -1,63 +1,16 @@
 import { FunctionComponent as FC } from "preact";
-import { useCallback, useMemo } from "preact/hooks";
+import { useCallback } from "preact/hooks";
 import { useLocation } from "wouter-preact";
-import { useAppState } from "../contexts/AppState";
-import { dateToIndexNow, doubleDigits, routeKey } from "./status-report";
-import {
-  BusRouteDictionary,
-  ScheduledStop,
-  ScheduleType,
-} from "../services/entities";
+import { doubleDigits } from "./status-report";
+import { BusRouteDictionary, ScheduledStop } from "../services/entities";
 import { CurrentTime } from "../components/CurrentTime";
 import { BackArrowIcon } from "../components/BackArrowIcon";
-import { routeNameFromHeader } from "./Home";
+import { useRouteData } from "../hooks/useRouteData";
 
-type StatusFilterProps = StatusReportProps & {
-  scheduleType: ScheduleType;
-};
-
-const filterByStatus = ({
-  stopName,
-  dest,
-  data,
-  scheduleType,
-}: StatusFilterProps) => {
-  if (!data) return null;
-
-  const key = routeKey(stopName, dest);
-  const routeData = data[key];
-  if (!routeData) return null;
-
-  const indexNow = dateToIndexNow();
-  let nextTimes: ScheduledStop[] = [];
-  for (const time of routeData.times) {
-    if (nextTimes.length > 3) break;
-
-    if (time.index < indexNow || time.type !== scheduleType) continue;
-
-    nextTimes.push(time);
-  }
-
-  return nextTimes;
-};
-
-const useRouteNextTimes = ({ stopName, dest, data }: StatusReportProps) => {
-  const { scheduleType } = useAppState();
-
-  const nextTimes = useMemo(
-    () => filterByStatus({ stopName, dest, scheduleType, data }),
-    [stopName, dest, data, scheduleType]
-  );
-
-  const routeName = useMemo(() => {
-    const key = routeKey(stopName, dest);
-    const routeData = data?.[key];
-    if (!routeData) return null;
-
-    return routeNameFromHeader(routeData.header);
-  }, [stopName, dest, data]);
-
-  return { nextTimes, routeName };
+type StatusReportProps = {
+  stopName: string;
+  dest: string;
+  data: BusRouteDictionary | null;
 };
 
 const StopTimeDisplay: FC<ScheduledStop> = ({ hour, minute, note }) => {
@@ -85,18 +38,12 @@ const StatusReportHeader: FC<{ routeName: string; onBack: () => void }> = ({
   </div>
 );
 
-type StatusReportProps = {
-  stopName: string;
-  dest: string;
-  data: BusRouteDictionary | null;
-};
-
 export const StatusReport: FC<StatusReportProps> = ({
   stopName,
   dest,
   data,
 }) => {
-  const { nextTimes, routeName } = useRouteNextTimes({ stopName, dest, data });
+  const { nextTimes, routeName } = useRouteData({ stopName, dest, data });
   const [_, to] = useLocation();
 
   const onClickBack = useCallback(() => to("/"), []);
