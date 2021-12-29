@@ -34,11 +34,9 @@ const filterByStatus = ({
   const routeData = data[key];
   if (!routeData) return null;
 
-  //　TODO a separate time list should be provided per schedule type.
-  // If so, there will be no need to filter by schedule type.
   const indexNow = dateToIndexNow();
-  const subsequentTimes = routeData.times.filter(
-    (t) => t.index >= indexNow && t.type === scheduleType
+  const subsequentTimes = routeData[scheduleType].filter(
+    (t) => t.index >= indexNow
   );
   const orderedSubsequentTimes = subsequentTimes.sort(byStopIndex);
 

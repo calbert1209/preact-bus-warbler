@@ -23,7 +23,9 @@ export type ScheduledStop = {
 export type Route = {
   name: string;
   header: RouteHeader;
-  times: ScheduledStop[];
+  weekday: ScheduledStop[];
+  saturday: ScheduledStop[];
+  holiday: ScheduledStop[];
 };
 
 export type BusRouteDictionary = Record<string, Route>;

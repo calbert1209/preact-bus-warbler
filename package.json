@@ -2,7 +2,7 @@
   "name": "hello-preact",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --base \"/preact-bus-warbler\"",
+    "dev": "vite --base \"/preact-bus-warbler/\"",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier -w .",
