@@ -133,7 +133,7 @@ h1 {
   flex-direction: row;
   justify-content: center;
   color: white;
-  margin-top: 1em;
+  margin: 1rem 4rem 0rem 5rem;
 }
 
 .nextTimesContainer {
@@ -145,7 +145,7 @@ h1 {
 
 .nextTimesBlock {
   background-color: var(--grey900);
-  padding: 0.5em 4em;
+  padding: 0.5rem 4rem 0.5rem 5rem;
   border-radius: 4px;
   border: 1px solid var(--black50);
 }
@@ -154,15 +154,12 @@ h1 {
   font-weight: 700;
   font-size: 2em;
   display: grid;
-  grid-template-columns: 10vw 0.3em 10vw;
-  align-items: center;
+  grid-template-columns: 5rem 1rem 6rem;
+  justify-items: center;
 }
 
 .timeDisplay .pre-colon {
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  align-items: center;
+  justify-self: end;
 }
 
 .timeDisplay .post-colon {
@@ -170,6 +167,7 @@ h1 {
   flex-direction: row;
   justify-content: start;
   align-items: baseline;
+  justify-self: start;
 }
 
 .timeDisplay div.note {
