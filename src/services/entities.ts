@@ -10,6 +10,7 @@ export type RouteHeader = {
   dest: string;
   fetchDate: string;
   publishDate: string;
+  label: string;
 };
 
 export type ScheduledStop = {

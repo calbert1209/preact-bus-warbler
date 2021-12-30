@@ -18,7 +18,7 @@ export const Home = ({ data }: HomeProps) => {
   const entries = useMemo(() => {
     return Object.entries(data).map(([key, route]) => {
       const keyAsPath = key.split("_").join("/");
-      const label = routeNameFromHeader(route.header);
+      const label = route.header.label ?? routeNameFromHeader(route.header);
       return {
         key,
         label,
